@@ -51,8 +51,8 @@ public class Pharmacist extends User {
             return this;
         }
 
-        public Builder setCreated_at(LocalDateTime created_at) {
-            this.created_at = created_at;
+        public Builder setCreated_at() {
+            this.created_at = LocalDateTime.now();
             return this;
         }
 
