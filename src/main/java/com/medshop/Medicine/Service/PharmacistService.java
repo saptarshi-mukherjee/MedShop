@@ -9,4 +9,5 @@ public interface PharmacistService {
     public List<Pharmacist> getAllPharmacists();
     public String verify(String username, String password);
     public String logout(String username);
+    public Pharmacist getOnePharmacist(String username);
 }

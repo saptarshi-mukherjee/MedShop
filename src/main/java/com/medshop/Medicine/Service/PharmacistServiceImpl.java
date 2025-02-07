@@ -100,4 +100,9 @@ public class PharmacistServiceImpl implements PharmacistService {
         refresh_token_service.deleteRefreshToken(token);
         return "Logged out";
     }
+
+    @Override
+    public Pharmacist getOnePharmacist(String username) {
+        return pharma_repo.fetchOnePharmacist(username);
+    }
 }

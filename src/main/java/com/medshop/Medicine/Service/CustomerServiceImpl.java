@@ -103,4 +103,9 @@ public class CustomerServiceImpl implements CustomerService {
         refresh_token_service.deleteRefreshToken(refresh_token);
         return "Logged out";
     }
+
+    @Override
+    public Customer getOneCustomer(String username) {
+        return customer_repo.fetchOneCustomer(username);
+    }
 }

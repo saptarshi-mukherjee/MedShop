@@ -12,4 +12,6 @@ public interface CustomerService {
     public String verify(String username, String password);
 
     public String logout(String username);
+
+    public Customer getOneCustomer(String username);
 }

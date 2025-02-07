@@ -1,12 +1,15 @@
 package com.medshop.Medicine.Service;
 
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -51,6 +54,27 @@ public class TokenServiceImpl implements TokenService {
                 .compact();
     }
 
+    @Override
+    public String extractUsername(String token) {
+        return getClaims(token).getSubject();
+    }
+
+    @Override
+    public boolean isValidToken(String token) {
+        return getClaims(token).getExpiration().after(new Date());
+    }
+
+    @Override
+    public List<String> extractRoles(String token) {
+        List<Object> roles_obj=getClaims(token).get("roles", List.class);
+        List<String> roles=new ArrayList<>();
+        for(Object obj : roles_obj) {
+            if(obj instanceof String)
+                roles.add((String)obj);
+        }
+        return roles;
+    }
+
     private SecretKey generateKey() {
         byte[] decode= Decoders.BASE64.decode(getKey());
         return Keys.hmacShaKeyFor(decode);
@@ -60,5 +84,25 @@ public class TokenServiceImpl implements TokenService {
     private String getKey() {
         String key="7uyfriImbYeXUQe8mvLs0tjSfpUpX8AgLzkIXMguyhs=";
         return key;
+    }
+
+    private Claims getClaims(String token) {
+        Claims claims=null;
+        try {
+            claims=Jwts
+                    .parser()
+                    .verifyWith(generateKey())
+                    .build()
+                    .parseSignedClaims(token)
+                    .getPayload();
+        }
+        catch(ExpiredJwtException e) {
+            claims=e.getClaims();
+        }
+        return claims;
+    }
+
+    private Date extractExpiration(String token) {
+        return getClaims(token).getExpiration();
     }
 }

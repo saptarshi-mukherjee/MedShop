@@ -6,6 +6,8 @@ import com.medshop.Medicine.DTO.PharmacistRegistrationDto;
 import com.medshop.Medicine.Models.Pharmacist;
 import com.medshop.Medicine.Service.PharmacistService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,6 +18,11 @@ public class PharmacistController {
 
     @Autowired
     PharmacistService pharma_service;
+
+    private String getUsername() {
+        UserDetails principal=(UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return principal.getUsername();
+    }
 
     @PostMapping("/register")
     public List<Pharmacist> registerPharmacist(@RequestBody PharmacistRegistrationDto register) {
@@ -28,8 +35,15 @@ public class PharmacistController {
         return pharma_service.verify(login.getUsername(),login.getPassword());
     }
 
-    @GetMapping("/logout/{username}")
-    public String logout(@PathVariable("username") String username) {
+    @GetMapping("/logout")
+    public String logout() {
+        String username=getUsername();
         return pharma_service.logout(username);
+    }
+
+    @GetMapping("/get/one")
+    public Pharmacist getPharmacist() {
+        String username=getUsername();
+        return pharma_service.getOnePharmacist(username);
     }
 }
