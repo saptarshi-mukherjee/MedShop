@@ -1,5 +1,6 @@
 package com.MedShop.quick_com.Services.ShopService;
 
+import com.MedShop.quick_com.Models.Customer;
 import com.MedShop.quick_com.Models.Shop;
 
 public interface ShopService {

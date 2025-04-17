@@ -1,7 +1,9 @@
 package com.MedShop.quick_com.Services.ShopService;
 
 
+import com.MedShop.quick_com.Models.Customer;
 import com.MedShop.quick_com.Models.Shop;
+import com.MedShop.quick_com.Repositories.CustomerRepository;
 import com.MedShop.quick_com.Repositories.ShopRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,6 +13,8 @@ public class ShopServiceImpl implements ShopService {
 
     @Autowired
     ShopRepository shop_repo;
+    @Autowired
+    CustomerRepository customer_repo;
 
     @Override
     public Shop addShop(String name, String address, String GSTIN) throws Exception {

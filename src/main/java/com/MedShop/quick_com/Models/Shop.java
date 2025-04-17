@@ -33,6 +33,12 @@ public class Shop {
     private List<Item> items;
 
 
+    // For JPA
+    public Shop() {
+
+    }
+
+
     private Shop(ShopBuilder builder) {
         employees=new ArrayList<>();
         customers=new ArrayList<>();
