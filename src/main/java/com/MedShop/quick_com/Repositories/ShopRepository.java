@@ -13,4 +13,7 @@ public interface ShopRepository extends JpaRepository<Shop,Long> {
 
     @Query(value = "select * from shops where uid = :uid", nativeQuery = true)
     public Shop fetchShopByUid(@Param("uid") String uid);
+
+    @Query(value = "select * from shops where shop_name = :name", nativeQuery = true)
+    public Shop fetchShopByName(@Param("name") String name);
 }

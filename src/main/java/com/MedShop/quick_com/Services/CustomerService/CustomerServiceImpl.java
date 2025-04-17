@@ -8,6 +8,8 @@ import com.MedShop.quick_com.Repositories.ShopRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CustomerServiceImpl implements CustomerService {
 
@@ -36,5 +38,11 @@ public class CustomerServiceImpl implements CustomerService {
         customer=customer_repo.save(customer);
         shop=shop_repo.save(shop);
         return customer;
+    }
+
+    @Override
+    public List<Shop> getAllShops(String customer_name) {
+        Customer customer=customer_repo.fetchShopsByName(customer_name);
+        return customer.getShops();
     }
 }

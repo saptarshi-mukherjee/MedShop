@@ -59,4 +59,22 @@ public class CustomerController {
         response.setShops(connected_shops);
         return response;
     }
+
+
+    @GetMapping("/get/all/shops/{customer_name}")
+    public ConnectedShopsResponseDto getAllShops(@PathVariable("customer_name") String customer_name) {
+        List<Shop> shops=customer_service.getAllShops(customer_name);
+        List<ShopResponseDto> connected_shops=new ArrayList<>();
+        for(Shop shop : shops) {
+            ShopResponseDto shop_response=new ShopResponseDto();
+            shop_response.setShop_name(shop.getShop_name());
+            shop_response.setShop_address(shop.getShop_address());
+            shop_response.setShop_uid(shop.getUid());
+            connected_shops.add(shop_response);
+        }
+        ConnectedShopsResponseDto response=new ConnectedShopsResponseDto();
+        response.setCustomer_name(customer_name);
+        response.setShops(connected_shops);
+        return response;
+    }
 }
