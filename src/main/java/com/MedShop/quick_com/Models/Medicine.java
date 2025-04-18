@@ -87,4 +87,26 @@ public class Medicine {
     public void setCompany(Company company) {
         this.company = company;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(this==obj)
+            return true;
+        if (!(obj instanceof Medicine))
+            return false;
+        Medicine medicine=(Medicine) obj;
+        if(this.medicine_name.equals(medicine.getMedicine_name()))
+            return true;
+        else
+            return false;
+    }
+
+
+    @Override
+    public int hashCode() {
+        if (this.medicine_name!=null)
+            return this.medicine_name.hashCode();
+        else
+            return 0;
+    }
 }

@@ -77,4 +77,25 @@ public class Batch {
     public void setMedicine(Medicine medicine) {
         this.medicine = medicine;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if(this==o)
+            return true;
+        if(!(o instanceof Batch))
+            return false;
+        Batch batch=(Batch) o;
+        if(this.batch_number.equals(batch.getBatch_number()))
+            return true;
+        else
+            return false;
+    }
+
+    @Override
+    public int hashCode() {
+        if (this.batch_number!=null)
+            return this.batch_number.hashCode();
+        else
+            return 0;
+    }
 }
