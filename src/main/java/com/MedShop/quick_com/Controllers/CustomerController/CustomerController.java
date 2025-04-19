@@ -5,8 +5,11 @@ import com.MedShop.quick_com.DTO.Requests.ConnectShopRequestDto;
 import com.MedShop.quick_com.DTO.Requests.NewCustomerRequestDto;
 import com.MedShop.quick_com.DTO.Responses.ConnectedShopsResponseDto;
 import com.MedShop.quick_com.DTO.Responses.NewCustomerResponseDto;
+import com.MedShop.quick_com.DTO.Responses.SearchMedicineResponseDto;
 import com.MedShop.quick_com.DTO.Responses.ShopResponseDto;
 import com.MedShop.quick_com.Models.Customer;
+import com.MedShop.quick_com.Models.ExpiryStatus;
+import com.MedShop.quick_com.Models.Item;
 import com.MedShop.quick_com.Models.Shop;
 import com.MedShop.quick_com.Services.CustomerService.CustomerService;
 import com.MedShop.quick_com.Strategies.StringNormalization.BasicNormalization;
@@ -76,5 +79,41 @@ public class CustomerController {
         response.setCustomer_name(customer_name);
         response.setShops(connected_shops);
         return response;
+    }
+
+
+    @GetMapping("/get")
+    public List<SearchMedicineResponseDto> searchMedicine(@RequestParam("shop") String shop_name,
+                                                    @RequestParam("med") String medicine_name) {
+        List<Item> items=customer_service.searchMedicine(shop_name,medicine_name);
+        List<SearchMedicineResponseDto> results=new ArrayList<>();
+        for(Item item : items) {
+            if(item.getBatch().getExpiry_status()== ExpiryStatus.NOT_EXPIRED) {
+                SearchMedicineResponseDto response = new SearchMedicineResponseDto();
+                response.setMedicine_name(item.getMedicine().getMedicine_name());
+                response.setBatch_number(item.getBatch().getBatch_number());
+                response.setExp_date(item.getBatch().getExp_date().toString());
+                response.setPrice(item.getBatch().getPrice());
+                results.add(response);
+            }
+        }
+        return results;
+    }
+
+
+    @GetMapping("/get/compound")
+    public List<SearchMedicineResponseDto> searchCompound(@RequestParam("shop") String shop_name,
+                                                          @RequestParam("compound") String compound_name) {
+        List<Item> items=customer_service.searchCompound(shop_name,compound_name);
+        List<SearchMedicineResponseDto> response_list=new ArrayList<>();
+        for(Item item : items) {
+            SearchMedicineResponseDto response=new SearchMedicineResponseDto();
+            response.setMedicine_name(item.getMedicine().getMedicine_name());
+            response.setBatch_number(item.getBatch().getBatch_number());
+            response.setExp_date(item.getBatch().getExp_date().toString());
+            response.setPrice(item.getBatch().getPrice());
+            response_list.add(response);
+        }
+        return response_list;
     }
 }
