@@ -1,0 +1,21 @@
+Requirements :-
+A medicine has a name, number of units per strip/bottle/vial, batch,  list of compounds, list of keywords and a company.
+A batch has a batch number, manufacturing date and expiry date.
+A compound has its name and a schedule
+A keyword has a keyword name.
+A schedule is an enum.
+A company has its name, address and Mfg.Lic. No.
+A shop has a name, address, GSTIN, an UID, list of medicines, list of registered customers, list of employees.
+A customer has name,list of addresses, phone, email.
+An employee has name, address, phone, email, employee ID, shop.
+An address has building number, street, city, district, PIN code.
+A shop can register itself, with their current inventory. Upon registering, an UID is generated for the shop.
+A customer can register themselves.
+A customer can connect to a shop via the shop’s UID.
+A customer can search for a particular medicine from among the inventories of their registered shops. Searching on the following parameters is allowed.
+Medicine name -> Returns the medicine
+Medicine composition -> Returns the list of medicines having that         composition.
+Keyword -> Returns the list of medicines sharing that keyword.
+An employee can register themselves to a particular shop.
+An employee can add a medicine to their current shop’s inventory.
+An employee can remove a medicine from the current shop’s inventory.
